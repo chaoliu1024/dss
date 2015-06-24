@@ -1,0 +1,11 @@
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="red">#ffDC143C</color>
+    <color name="black">#ff000000</color>
+    <color name="blue">#ff1E90FF</color>
+    <color name="green">#ff00ff00</color>
+    <color name="loginText">#ff708090</color>
+    <color name="sliding_btn_color">#9be89b</color>
+    <color name="login_s_btn_color">#ff32CD32</color>
+    <color name="sliding_line_color">#1E90FF</color>
+</resources>

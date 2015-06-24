@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">评分系统</string>
+    <string name="units_name">参赛队伍:</string>
+    <string name="category_name">比赛名称:</string>
+    <string name="action_settings">Settings</string>
+    <string name="art_score">艺术分</string>
+    <string name="exec_score">完成分</string>
+    <string name="imp_score">总印象分</string>
+    <string name="button">提交</string>
+    
+    <string name="role_hint">请选择角色</string>
+    <string name="login">登陆</string>
+    <string name="role">身份:</string>
+    <string name="state">状态:</string>
+    
+    <string name="game_mode">赛事模式:</string>  
+    <string name="tscore">最后得分:</string>
+    <string name="rank">排名</string>
+    
+    <string name="digits">0123456789.</string>
+    
+    <string name="art_title1">编排设计的创新</string>
+    <string name="art_title2">舞曲风格的把握</string>
+    <string name="art_title3">表演技巧的运用</string>
+    <string name="veryGood">非常好</string>
+    <string name="good">较好</string>
+    <string name="common">一般</string>
+    <string name="poor">较差</string>
+    <string name="veryPoor">差</string>
+    <string name="exec_title1">舞步与音乐的正确性</string>
+    <string name="exec_title2">舞步的规范性</string>
+    <string name="exec_title3">舞步与音乐的吻合性</string>
+    <string name="exec_title4">集体动作一致性</string>
+    <string name="imp_title1">体现团队精神</string>
+    <string name="imp_title2">充满激情与自信的表演</string>
+    <string name="imp_title3">服装服饰妆容与舞曲风格相吻合</string>
+    
+    <string name="two">2</string>
+    <string name="onePointNine">1.9</string>
+    <string name="onePointEight">1.8</string>
+    <string name="onePointSeven">1.7</string>
+    <string name="onePointSix">1.6</string>
+    <string name="onePointFive">1.5</string>
+    <string name="one">1</string>
+    <string name="pointNine">0.9</string>
+    <string name="pointEight">0.8</string>
+    <string name="pointSeven">0.7</string>
+    <string name="pointSix">0.6</string>
+    <string name="pointFive">0.5</string>
+    <string name="pointFour">0.4</string>
+    <string name="pointThird">0.3</string>
+    <string name="pointTwo">0.2</string>
+    <string name="pointOne">0.1</string>
+    <string name="zero">0</string>
+
+</resources>

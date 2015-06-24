@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dwr>
+	<allow>
+		<create creator="spring" javascript="dhajax">
+			<param name="beanName" value="dwrAction" />
+		</create>
+	</allow>
+</dwr>
