@@ -80,7 +80,7 @@ public class ConnSQL {
 	 * 
 	 * @param sql
 	 * @param params
-	 * @return
+	 * @return boolean
 	 */
 	public boolean deleteObject(String sql, Object[] params) {
 		try {
