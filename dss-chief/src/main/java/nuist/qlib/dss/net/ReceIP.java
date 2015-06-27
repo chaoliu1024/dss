@@ -8,33 +8,33 @@ import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
  * 接收IP的线程
  * 
  */
-public class ReceIP implements Runnable // 接收
-{
+public class ReceIP implements Runnable {
 	private MulticastSocket dsock; // 广播套接字
 	private String host;
-	private Logger logger;
+	private Logger logger = LoggerFactory.getLogger(ReceIP.class.getName());;
 	private String path;
 	private static long[] timer;
 	boolean isLink;
 
 	public ReceIP(MulticastSocket dsock) {
-		logger = Logger.getLogger(ReceIP.class.getName());
 		this.dsock = dsock;
 		this.host = "239.0.0.1";
-		String relativelyPath = System.getProperty("user.dir");// 获取工程目录
-		this.path = relativelyPath + "\\Adress.txt";
+		// 获取工程目录
+		String relativelyPath = System.getProperty("user.dir");
+		this.path = relativelyPath + "\\Address.txt";
 		timer = new long[10];
-		for (int i = 0; i < timer.length; i++) {// 0~3存放artJudge,4~7存放execJudge,8、9存放impJudge
+		// 0~3存放artJudge,4~7存放execJudge,8、9存放impJudge
+		for (int i = 0; i < timer.length; i++) {
 			timer[i] = 0;
 		}
 		this.isLink = BroadcastIP.getLink();
@@ -112,11 +112,9 @@ public class ReceIP implements Runnable // 接收
 				}
 			}
 		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
 			logger.error("IP为未知地址!");
 			throw new RuntimeException("IP为未知地址!");
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			logger.error("加入广播组失败!");
 			throw new RuntimeException("加入广播组失败!");
 		} finally {

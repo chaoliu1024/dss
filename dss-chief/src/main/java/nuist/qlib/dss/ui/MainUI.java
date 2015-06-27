@@ -1,7 +1,5 @@
 /*
- * 文件名：MainUI.java
- * 版权：Copyright 2014 Artisan LiuChao
- * 描述：总界面。调用打分界面、出场顺序界面、导出成绩界面
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
  */
 
 package nuist.qlib.dss.ui;
@@ -33,7 +31,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * 总界面、调用打分界面、出场顺序界面、导出成绩界面
+ * 
+ * @author Chao Liu
+ * @since dss 1.0
+ */
 public class MainUI {
 
 	protected static Shell shell;
@@ -49,6 +55,8 @@ public class MainUI {
 	private Composite pan3;
 	private Composite composite;
 
+	private static final Logger logger = LoggerFactory.getLogger(MainUI.class);
+
 	/**
 	 * Launch the application.
 	 * 
@@ -59,6 +67,7 @@ public class MainUI {
 			MainUI window = new MainUI();
 			window.open();
 		} catch (Exception e) {
+			logger.error(e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -72,7 +81,6 @@ public class MainUI {
 		center(shell);
 		shell.open();
 		shell.layout();
-		// openScreenDisplay();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -95,7 +103,7 @@ public class MainUI {
 				MessageBox messagebox = new MessageBox(shell, SWT.ICON_QUESTION
 						| SWT.YES | SWT.NO);
 				messagebox.setText("提示");
-				messagebox.setMessage("您确定关闭系统吗?");
+				messagebox.setMessage("确定关闭系统吗?");
 				int message = messagebox.open();
 				if (message == SWT.YES) {
 					e.doit = true;
@@ -109,13 +117,9 @@ public class MainUI {
 	}
 
 	/**
+	 * 窗口居中
 	 * 
-	 * @author liuchao
-	 * @version 2014-3-4 上午11:11:15
-	 * @Description: 窗口居中
-	 * @param @param shell
-	 * @return void
-	 * @throws
+	 * @since dss 1.0
 	 */
 	private void center(Shell shell) {
 		Monitor monitor = shell.getMonitor();
@@ -127,19 +131,13 @@ public class MainUI {
 	}
 
 	/**
-	 * 
-	 * @author liuchao
-	 * @version 2014-3-4 上午10:23:19
-	 * @Description: 初始化界面
-	 * @param
-	 * @return void
-	 * @throws
+	 * @since dss 1.0
 	 */
 	private void defaultInit() {
 
 		try {
-			// 打开时清空adress.txt
-			File f = new File("Adress.txt");
+			// 打开时清空address.txt
+			File f = new File("Address.txt");
 			FileWriter fw = new FileWriter(f);
 			fw.write("");
 			fw.close();
@@ -155,8 +153,9 @@ public class MainUI {
 			MainServerInputThread mainServerInputThread = new MainServerInputThread(
 					serverSocket);
 			mainServerInputThread.start();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			logger.error(e.toString());
+			e.printStackTrace();
 		}
 
 		shell.setLayout(new FormLayout());
@@ -180,9 +179,12 @@ public class MainUI {
 		tabFolder.setLayoutData(fd_tabFolder);
 		tabFolder.setFont(SWTResourceManager.getFont("微软雅黑", 11, SWT.NORMAL));
 
-		pan1 = new Composite(tabFolder, SWT.None); // 面板1
-		pan2 = new Composite(tabFolder, SWT.None); // 面板2
-		pan3 = new Composite(tabFolder, SWT.None); // 面板3
+		// 面板1
+		pan1 = new Composite(tabFolder, SWT.None);
+		// 面板2
+		pan2 = new Composite(tabFolder, SWT.None);
+		// 面板3
+		pan3 = new Composite(tabFolder, SWT.None);
 
 		tabItem1 = new TabItem(tabFolder, SWT.NULL);
 		tabItem1.setText("比赛成绩");

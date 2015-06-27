@@ -1,7 +1,7 @@
 /*
  * 文件名:IP.java
  * 版权：Copyright 2014 czf
- * 描述：读取、清空Adress.txt中的IP
+ * 描述：读取、清空Address.txt中的IP
  */
 package nuist.qlib.dss.dao;
 
@@ -25,9 +25,9 @@ public class AddressManager {
 	/** 读取需要的IP */
 	public List<String> getIP(String receiver[]) {
 		try {
-			fw = new FileWriter("Adress.txt", true);
+			fw = new FileWriter("Address.txt", true);
 			pw = new PrintWriter(fw);
-			fr = new FileReader("Adress.txt");
+			fr = new FileReader("Address.txt");
 			br = new BufferedReader(fr);
 			list = new ArrayList<String>();
 
@@ -64,7 +64,7 @@ public class AddressManager {
 	/** 清空配置文件 (Adress里面IP冲突) */
 	public void clearIP() {
 		try {
-			File f = new File("Adress.txt");
+			File f = new File("Address.txt");
 			fw = new FileWriter(f);
 			fw.write("");
 			fw.close();
@@ -74,7 +74,6 @@ public class AddressManager {
 			try {
 				fw.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

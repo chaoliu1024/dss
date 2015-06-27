@@ -1,7 +1,5 @@
 /*
- * 文件名：MatchTeamScore.java
- * 版权：Copyright 2014 Artisan WangFang
- * 描述：比赛时,所有队伍信息及队伍成绩操作
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
  */
 
 package nuist.qlib.dss.teamManager;
@@ -13,7 +11,10 @@ import java.util.List;
 import nuist.qlib.dss.dao.TeamScoreDao;
 
 /**
- * @author liuchao
+ * 比赛时,所有队伍信息及队伍成绩操作
+ * 
+ * @author WangFang
+ * @since dss 1.0
  *
  */
 public class MatchTeamScore {

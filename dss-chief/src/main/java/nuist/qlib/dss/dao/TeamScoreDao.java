@@ -46,12 +46,10 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 获取赛事名称
 	 * 
 	 * @author liuchao
-	 * @version 2014-3-31 上午10:20:51
-	 * @Description: 获取赛事名称
 	 * @return List<HashMap<String,Object>>
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getMatchName() {
 		String sql = "select distinct match_name as matchName from match_order where unit_status = 0";
@@ -61,12 +59,10 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 获取未进行比赛的场次
 	 * 
 	 * @author liuchao
-	 * @version 2014-3-28 下午6:48:33
-	 * @Description: 获取未进行比赛的场次
 	 * @return List<Integer> 未进行比赛的场次列表
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getMatchNum(String matchName) {
 		String sql = "select Distinct(match_num) as matchNum from match_order where unit_status = 0 and match_name = ?";
@@ -76,13 +72,11 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 获取初始时的比赛场次
 	 * 
 	 * @author liuchao
-	 * @version 2014-3-31 上午11:16:54
-	 * @Description: 获取初始时的比赛场次
 	 * @param matchName
 	 * @return List<HashMap<String,Object>>
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getInitMatchNum(String matchName) {
 		String sql = "select min(match_num) as matchNum from match_order where unit_status = 0 and match_name = ?";
@@ -92,15 +86,14 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 获取比赛类型：预赛/决赛
+	 * 
 	 * @author liuchao
-	 * @version 2014-3-31 下午4:58:37
-	 * @Description: 获取比赛类型：预赛/决赛
 	 * @param matchName
 	 *            赛事名称
 	 * @param matchNum
 	 *            比赛场次
 	 * @return List<HashMap<String,Object>>
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getMatchType(String matchName,
 			String matchNum) {
@@ -111,13 +104,12 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 获取初始队伍信息
+	 * 
 	 * @author liuchao
-	 * @version 2014-3-31 下午1:59:37
-	 * @Description: 获取初始队伍信息
 	 * @param matchNum
 	 * @param matchType
 	 * @return List<HashMap<String,Object>>
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getInitTeam(int matchNum,
 			String matchName) {
@@ -128,15 +120,13 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 更新队伍状态
+	 * 
 	 * @author liuchao
-	 * @version 2014-3-31 下午5:34:39
-	 * @Description: 更新队伍状态
 	 * @param matchOrder
 	 *            出场顺序
 	 * @param status
 	 *            队伍状态
-	 * @return
-	 * @throws
 	 */
 	public int updateTeamStatu(int id, int status) {
 		String sql = "update match_order set unit_status = ? where id = ?";
@@ -144,12 +134,11 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 查询队伍记录
 	 * 
 	 * @author liuchao
-	 * @version 2014-3-31 下午9:29:30
-	 * @Description: 查询队伍记录
 	 * @param id
-	 *            : 队伍id
+	 *            队伍id
 	 * @return
 	 * @throws
 	 */
@@ -163,7 +152,6 @@ public class TeamScoreDao {
 
 	/**
 	 * @author LiuChao
-	 * @date Sep 6, 2014 2:17:05 PM
 	 */
 	public int updateTeamScore(int id, String artScore01, String artScore02,
 			String artScore03, String artScore04, String artTotalScore,
@@ -185,12 +173,11 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 插入比赛成绩 10个误差分数
 	 * 
 	 * @author liuchao
 	 * @version 2014-4-1 上午11:25:06
-	 * @Description: 插入比赛成绩 10个误差分数
 	 * @return
-	 * @throws
 	 */
 	public int insertTeamScore(int id, String _artScore01, String _artScore02,
 			String _artScore03, String _artScore04, String _artTotalScore,
@@ -229,15 +216,14 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 得到延迟比赛的队伍信息
+	 * 
 	 * @author liuchao
-	 * @version 2014-4-1 上午7:17:38
-	 * @Description: 得到延迟比赛的队伍信息
 	 * @param matchName
 	 *            赛事名称
 	 * @param matchType
 	 *            赛事模式：预赛/决赛
 	 * @return
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getNoRaceTeam(String matchName,
 			int matchType) {
@@ -248,10 +234,10 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 返回暂停比赛队伍的项目
 	 * 
 	 * @author liuchao
-	 * @version 2014-4-1 上午7:35:58
-	 * @Description: 返回暂停比赛队伍的项目
+	 * @Description:
 	 * @param matchName
 	 *            赛事名称
 	 * @param match_num
@@ -261,7 +247,6 @@ public class TeamScoreDao {
 	 * @param matchType
 	 *            赛事模式：预赛/决赛
 	 * @return
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getNoRaceCategory(String matchName,
 			String team, int matchType) {
@@ -272,10 +257,9 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 得到暂停比赛的队伍ID
 	 * 
 	 * @author liuchao
-	 * @version 2014-4-1 上午7:44:48
-	 * @Description: 得到暂停比赛的队伍ID
 	 * @param matchName
 	 *            赛事名称
 	 * @param match_num
@@ -287,7 +271,6 @@ public class TeamScoreDao {
 	 * @param category
 	 *            参赛项目
 	 * @return
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getNoRaceTeamID(String matchName,
 			int matchType, String team, String category) {
@@ -298,11 +281,11 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 
+	 * 得到所有需要进行补赛的赛事名称
+	 * 
 	 * @author liuchao
-	 * @version 2014-4-3 下午12:14:42
-	 * @Description: 得到所有需要进行补赛的赛事名称
 	 * @return
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getAllReplayMatchNames() {
 		String sql = "select distinct match_name as matchName from match_order where unit_status = 2";
@@ -312,9 +295,9 @@ public class TeamScoreDao {
 	}
 
 	/**
+	 * 得到下一只队伍的相关信息
+	 * 
 	 * @author liuchao
-	 * @version 2014-3-31 下午11:42:25
-	 * @Description: 得到下一只队伍的相关信息
 	 * @param matchType
 	 *            赛事模式：预赛/决赛
 	 * @param matchOrder
@@ -322,7 +305,6 @@ public class TeamScoreDao {
 	 * @param match_num
 	 *            组别
 	 * @return
-	 * @throws
 	 */
 	public List<HashMap<String, Object>> getNextTeam(int matchOrder,
 			int match_num, String matchName) {

@@ -1,8 +1,7 @@
 /*
- * 文件名：RankPanel.java
- * 版权：Copyright 2014 Artisan WangFang
- * 描述：成绩排名界面
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
  */
+
 package nuist.qlib.dss.ui;
 
 import java.text.DecimalFormat;
@@ -36,6 +35,12 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * 成绩排名界面
+ * 
+ * @author WangFang
+ * @since dss 1.0
+ */
 public class RankPanel {
 
 	protected Shell rank_shell;

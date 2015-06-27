@@ -1,8 +1,7 @@
 /*
- * 文件名：ConfigPanel.java
- * 版权：Copyright 2014 Artisan WangFang
- * 描述：配置裁判长名字等配置信息
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
  */
+
 package nuist.qlib.dss.ui;
 
 import java.util.HashMap;
@@ -21,6 +20,12 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * 配置裁判长名字等配置信息
+ * 
+ * @author WangFang
+ * @since dss 1.0
+ */
 public class ConfigPanel extends Composite {
 
 	private static ConfigPanel panel;

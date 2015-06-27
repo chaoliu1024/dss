@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
+ */
+
 package nuist.qlib.dss.util;
 
 import java.io.File;
