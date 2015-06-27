@@ -2,6 +2,6 @@ package nuist.qlib.dss.net.service.impl;
 
 import nuist.qlib.dss.net.service.ReceiveService;
 
-public class ReceiveIPService extends ReceiveService {
+public class ReceiveScoreServiceImpl extends ReceiveService {
 
 }

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import nuist.qlib.dss.constant.MessageType;
 import nuist.qlib.dss.net.service.ReceiveService;
-import nuist.qlib.dss.net.service.impl.ReceiveIPService;
-import nuist.qlib.dss.net.service.impl.ReceiveScoreService;
+import nuist.qlib.dss.net.service.impl.ReceiveIPServiceImpl;
+import nuist.qlib.dss.net.service.impl.ReceiveScoreServiceImpl;
 import nuist.qlib.dss.net.vo.BaseMessageVO;
 
 public class ReceiveServiceManager {
@@ -38,7 +38,7 @@ public class ReceiveServiceManager {
 	 * @since DSS 1.0
 	 */
 	private static void initReceiveServiceMap() {
-		serviceMap.put(MessageType.IP, new ReceiveIPService());
-		serviceMap.put(MessageType.SCORE, new ReceiveScoreService());
+		serviceMap.put(MessageType.IP, new ReceiveIPServiceImpl());
+		serviceMap.put(MessageType.SCORE, new ReceiveScoreServiceImpl());
 	}
 }
