@@ -8,7 +8,7 @@ import nuist.qlib.dss.constant.MessageType;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class MatchMessageVO extends BaseMessageVO implements Serializable {
+public class MatchInfoMessageVO extends BaseMessageVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
