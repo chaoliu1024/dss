@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
+ */
+
 package nuist.qlib.dss.scoreManager;
 
 import java.util.ArrayList;
@@ -19,8 +23,6 @@ public class QueryScore {
 
 	/***
 	 * 获取所有已经有成绩的赛事名称
-	 * 
-	 * @return
 	 */
 	public String[] getAllMatchNames() {
 		List<HashMap<String, Object>> data = dao.getAllMatchNames();

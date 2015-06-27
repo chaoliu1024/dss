@@ -1,7 +1,5 @@
 /*
- * 文件名：QueryScoreDao.java
- * 版权：Copyright 2014 Artisan WangFang
- * 描述：成绩查询Dao，包括查询已有成绩的赛事名称
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
  */
 
 package nuist.qlib.dss.dao;
@@ -10,6 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * 成绩查询Dao，包括查询已有成绩的赛事名称
+ * 
+ * @author WangFang
+ * @since dss 1.0
+ *
+ */
 public class QueryScoreDao {
 	// 连接数据库需要的变量
 	private ConnSQL connSql = new ConnSQL();

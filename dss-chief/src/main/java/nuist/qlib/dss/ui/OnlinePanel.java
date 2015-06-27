@@ -1,11 +1,7 @@
-/**   
- * @Title: OnlinePanel.java
- * @Package com.artisan.scoresys.ui
- * @Description: TODO(用一句话描述该文件做什么)
- * @author czf  
- * @date 2014年4月16日 下午12:38:37
- * @version V1.0   
+/*
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
  */
+
 package nuist.qlib.dss.ui;
 
 import nuist.qlib.dss.dao.AddressManager;
@@ -35,11 +31,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
- * @ClassName: OnlinePanel
- * @Description: TODO(这里用一句话描述这个类的作用)
- * @author czf
- * @date 2014年4月16日 下午12:38:37
  * 
+ * @author czf
+ * @since dss 1.0
  */
 public class OnlinePanel extends Composite {
 

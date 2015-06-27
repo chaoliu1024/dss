@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
+ */
+
 package nuist.qlib.dss.ui;
 
 import org.eclipse.jface.fieldassist.AutoCompleteField;
@@ -22,7 +26,6 @@ public class ChooseMatchName extends Dialog {
 
 	public ChooseMatchName(Shell parent) {
 		super(parent);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void open() {

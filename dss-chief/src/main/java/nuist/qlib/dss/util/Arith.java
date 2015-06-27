@@ -1,14 +1,11 @@
 /*
- * Copyright (c) 2014, Asiainfo. All rights reserved.
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
  */
 
 package nuist.qlib.dss.util;
 
 import java.math.BigDecimal;
 
-/**
- * @author Jstar
- */
 public class Arith {
 
 	// 默认除法运算精度

@@ -1,6 +1,9 @@
+/*
+ * Copyright (c) 2015, NUIST - 120Lib. All rights reserved.
+ */
+
 package nuist.qlib.dss.dao;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +33,8 @@ public class ConnSQL {
 		Properties props = new Properties();
 		try {
 			// String relativelyPath=System.getProperty("user.dir");
-			// InputStream in = new FileInputStream(relativelyPath+"\\dataBase.properties");
+			// InputStream in = new
+			// FileInputStream(relativelyPath+"\\dataBase.properties");
 			InputStream in = ConnSQL.class
 					.getResourceAsStream("/dataBase.properties");
 			props.load(in);
