@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 分数排名List中的头部信息(舞蹈) -->
- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_color_bg"
@@ -17,18 +17,18 @@
         android:layout_marginRight="5dp"
         android:text="排名"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <TextView
         android:id="@+id/textView11"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/roleTextView"
         android:layout_marginRight="5dp"
+        android:layout_toRightOf="@id/roleTextView"
         android:text="参赛单位"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-   
 
-     <com.artisan.dance.ui.InterceptScrollContainer
+    <nuist.qlib.dss.ui.InterceptScrollContainer
         android:id="@+id/scroollContainter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,8 @@
         android:layout_toRightOf="@id/textView11"
         android:focusable="false" >
 
-        <com.artisan.dance.ui.MyHScrollView      android:id="@+id/horizontalScrollView1"
+        <nuist.qlib.dss.ui.MyHScrollView
+            android:id="@+id/horizontalScrollView1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
@@ -101,8 +102,8 @@
                     android:layout_marginRight="5dp"
                     android:text="裁判6"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                
-                 <TextView
+
+                <TextView
                     android:id="@+id/score7"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
@@ -110,8 +111,8 @@
                     android:layout_marginRight="5dp"
                     android:text="裁判7"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                 
-                  <TextView
+
+                <TextView
                     android:id="@+id/score8"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
@@ -119,8 +120,8 @@
                     android:layout_marginRight="5dp"
                     android:text="裁判8"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                  
-                   <TextView
+
+                <TextView
                     android:id="@+id/score9"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
@@ -128,9 +129,8 @@
                     android:layout_marginRight="5dp"
                     android:text="裁判9"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                   
-                    
-                     <TextView
+
+                <TextView
                     android:id="@+id/sub_score"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
@@ -138,17 +138,20 @@
                     android:layout_marginRight="5dp"
                     android:text="裁判减分"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                     
-                     <TextView
+
+                <TextView
                     android:id="@+id/total"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:text="总分"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />                    
-                     
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
-      </com.artisan.dance.ui.MyHScrollView>
-   </com.artisan.dance.ui.InterceptScrollContainer>
+        </nuist.qlib.dss.ui.MyHScrollView>
+
+        <nuist.qlib.dss.InterceptScrollContainer>
+        </nuist.qlib.dss.InterceptScrollContainer>
+    </nuist.qlib.dss.ui.InterceptScrollContainer>
+
 </RelativeLayout>

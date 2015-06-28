@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.artisan.dance.activity"
+    package="nuist.qlib.dss.activity"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <!--  android:name="com.artisan.acrobatics.application.CrashApplication"-->
+        <!--  android:name="nuist.qlib.dss.application.CrashApplication"-->
         
         <activity
             android:name="ScoreActivity"
@@ -50,11 +50,11 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
 
-        <service android:name="com.artisan.dance.service.BroadcastIPService" >
+        <service android:name="nuist.qlib.dss.service.BroadcastIPService" >
         </service>
-        <service android:name="com.artisan.dance.service.ReceiveIPService" >
+        <service android:name="nuist.qlib.dss.service.ReceiveIPService" >
         </service>
-        <service android:name="com.artisan.dance.service.ReceiveInforService" >
+        <service android:name="nuist.qlib.dss.service.ReceiveInforService" >
         </service>
     </application>
 
