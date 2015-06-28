@@ -1,2 +1,2 @@
 # dss
-this is a developing project
+This is a under developing project.
