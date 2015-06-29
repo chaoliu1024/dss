@@ -64,14 +64,14 @@ public class RankPanel {
 
 	private QueryScore lalaScore;
 
-//	public static void main(String[] args) {
-//		try {
-//			RankPanel window = new RankPanel();
-//			window.open();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	// public static void main(String[] args) {
+	// try {
+	// RankPanel window = new RankPanel();
+	// window.open();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	/**
 	 * Open the window.
@@ -92,8 +92,8 @@ public class RankPanel {
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {		
-		
+	protected void createContents() {
+
 		Display display = Display.getDefault();
 		rank_shell = new Shell(display, SWT.CLOSE | SWT.MIN);
 		rank_shell.setSize(1127, 680);
@@ -155,15 +155,15 @@ public class RankPanel {
 	 */
 	protected void defaultInit() {
 		try {
-			// 打开时清空adress.txt
-			File f = new File("Adress.txt");
+			// 打开时清空address.txt
+			File f = new File("Address.txt");
 			FileWriter fw = new FileWriter(f);
 			fw.write("");
 			fw.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		lalaScore = new QueryScore();
 		data = new ArrayList<HashMap<String, Object>>();
 		rank_shell.addShellListener(new ShellAdapter() {
@@ -192,7 +192,8 @@ public class RankPanel {
 
 		matchNameLabel = new Label(rank_composite, SWT.NONE);
 		matchNameLabel.setAlignment(SWT.CENTER);
-		matchNameLabel.setFont(SWTResourceManager.getFont("微软雅黑", 15, SWT.NORMAL));
+		matchNameLabel.setFont(SWTResourceManager.getFont("微软雅黑", 15,
+				SWT.NORMAL));
 		matchNameLabel.setBounds(0, 10, 1112, 35);
 		matchNameLabel.setText("赛事名称");
 
@@ -250,17 +251,17 @@ public class RankPanel {
 		score03_art.setWidth(50);
 		score04_art.setWidth(50);
 		avg_art.setWidth(75);
-		
+
 		score01_exection.setWidth(50);
 		score02_exection.setWidth(50);
 		score03_exection.setWidth(50);
 		score04_exection.setWidth(50);
 		avg_exection.setWidth(75);
-		
+
 		score01_impression.setWidth(70);
 		score02_impression.setWidth(70);
 		avg_impression.setWidth(75);
-		
+
 		sub_score.setWidth(75);
 		total.setWidth(65);
 		rank.setWidth(50);
@@ -269,30 +270,31 @@ public class RankPanel {
 	}
 
 	public void addEvent() {
-		
-		search.addFocusListener(new FocusListener(){
+
+		search.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				AutoCompleteField field = new AutoCompleteField(search,
-						new TextContentAdapter(), lalaScore.getCategories(matchType, matchName));
+						new TextContentAdapter(), lalaScore.getCategories(
+								matchType, matchName));
 			}
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
 		choice.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				MessageBox box = new MessageBox(rank_shell, SWT.OK);
 				box.setText("提示");
-				if(!lalaScore.isCollected()){
-					lalaScore=new QueryScore();
+				if (!lalaScore.isCollected()) {
+					lalaScore = new QueryScore();
 				}
 				if (lalaScore.isCollected()) {
 					// 当matchName不为空时，跳出选择界面，让用户选择赛事模式
@@ -345,8 +347,8 @@ public class RankPanel {
 				if (search.getText() != null && !search.getText().equals("")) {
 					String selectedValue = search.getText();
 					category = selectedValue;
-					if(!lalaScore.isCollected()){
-						lalaScore=new QueryScore();
+					if (!lalaScore.isCollected()) {
+						lalaScore = new QueryScore();
 					}
 					data = lalaScore.getRank(matchName, selectedValue,
 							matchType);
@@ -375,12 +377,14 @@ public class RankPanel {
 				dialog.setFileName(category);
 				String fileName = dialog.open(); // 获得保存的文件名
 				if (fileName != null && !fileName.equals("")) {
-					if(!lalaScore.isCollected()){
-						lalaScore=new QueryScore();
+					if (!lalaScore.isCollected()) {
+						lalaScore = new QueryScore();
 					}
-					List<HashMap<String,Object>> temp_data=lalaScore.getPrintRank(matchName, category,matchType);;
-					boolean mark = lalaScore.exportScoreExcel(temp_data, fileName,
-							matchName, category,matchType);
+					List<HashMap<String, Object>> temp_data = lalaScore
+							.getPrintRank(matchName, category, matchType);
+					;
+					boolean mark = lalaScore.exportScoreExcel(temp_data,
+							fileName, matchName, category, matchType);
 					if (mark) {
 						box.setMessage("导出成功");
 					} else {
@@ -441,42 +445,72 @@ public class RankPanel {
 		score03_art.setWidth(50);
 		score04_art.setWidth(50);
 		avg_art.setWidth(75);
-		
+
 		score01_exection.setWidth(50);
 		score02_exection.setWidth(50);
 		score03_exection.setWidth(50);
 		score04_exection.setWidth(50);
 		avg_exection.setWidth(75);
-		
+
 		score01_impression.setWidth(70);
 		score02_impression.setWidth(70);
 		avg_impression.setWidth(75);
-		
+
 		sub_score.setWidth(75);
 		total.setWidth(65);
 		rank.setWidth(50);
-		
+
 		TableItem item;
 		Font font = new Font(Display.getDefault(), "宋体", 10, SWT.COLOR_BLUE);
 		Color color = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);// 红色
 		for (int i = 0; i < data.size(); i++) {
 			item = new TableItem(table, SWT.NONE);
-			item.setText(new String[] { (String) data.get(i).get("teamName"),
-					String.valueOf(data.get(i).get("score01_art")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score01_art"))),
-					String.valueOf(data.get(i).get("score02_art")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score02_art"))),
-					String.valueOf(data.get(i).get("score03_art")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score03_art"))),
-					String.valueOf(data.get(i).get("score04_art")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score04_art"))),
-					String.valueOf(data.get(i).get("avg_art")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("avg_art"))),
-					String.valueOf(data.get(i).get("score01_execution")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score01_execution"))),
-					String.valueOf(data.get(i).get("score02_execution")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score02_execution"))),
-					String.valueOf(data.get(i).get("score03_execution")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score03_execution"))),
-					String.valueOf(data.get(i).get("score04_execution")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score04_execution"))),
-					String.valueOf(data.get(i).get("avg_execution")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("avg_execution"))),
-					String.valueOf(data.get(i).get("score01_impression")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score01_impression"))),		
-					String.valueOf(data.get(i).get("score02_impression")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("score02_impression"))),					
-					String.valueOf(data.get(i).get("avg_impression")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("avg_impression"))),					
-					String.valueOf(data.get(i).get("sub_score")==null?"":new DecimalFormat("#0.00").format(data.get(i).get("sub_score"))),
-					String.valueOf(new DecimalFormat("#0.00").format(data.get(i).get("total"))),
+			item.setText(new String[] {
+					(String) data.get(i).get("teamName"),
+					String.valueOf(data.get(i).get("score01_art") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score01_art"))),
+					String.valueOf(data.get(i).get("score02_art") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score02_art"))),
+					String.valueOf(data.get(i).get("score03_art") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score03_art"))),
+					String.valueOf(data.get(i).get("score04_art") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score04_art"))),
+					String.valueOf(data.get(i).get("avg_art") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("avg_art"))),
+					String.valueOf(data.get(i).get("score01_execution") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score01_execution"))),
+					String.valueOf(data.get(i).get("score02_execution") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score02_execution"))),
+					String.valueOf(data.get(i).get("score03_execution") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score03_execution"))),
+					String.valueOf(data.get(i).get("score04_execution") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score04_execution"))),
+					String.valueOf(data.get(i).get("avg_execution") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("avg_execution"))),
+					String.valueOf(data.get(i).get("score01_impression") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score01_impression"))),
+					String.valueOf(data.get(i).get("score02_impression") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("score02_impression"))),
+					String.valueOf(data.get(i).get("avg_impression") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("avg_impression"))),
+					String.valueOf(data.get(i).get("sub_score") == null ? ""
+							: new DecimalFormat("#0.00").format(data.get(i)
+									.get("sub_score"))),
+					String.valueOf(new DecimalFormat("#0.00").format(data
+							.get(i).get("total"))),
 					String.valueOf(data.get(i).get("rank")) });
 			item.setFont(15, font);
 			item.setBackground(15, color);
