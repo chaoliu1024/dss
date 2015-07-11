@@ -10,31 +10,30 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 /**
  * 
  * 接收IP的线程
  * 
  */
-public class ReceIP implements Runnable {
+public class ReceIP implements Runnable // 接收
+{
 	private MulticastSocket dsock; // 广播套接字
 	private String host;
-	private Logger logger = LoggerFactory.getLogger(ReceIP.class.getName());;
+	private Logger logger;
 	private String path;
 	private static long[] timer;
 	boolean isLink;
 
 	public ReceIP(MulticastSocket dsock) {
+		logger = Logger.getLogger(ReceIP.class.getName());
 		this.dsock = dsock;
 		this.host = "239.0.0.1";
-		// 获取工程目录
-		String relativelyPath = System.getProperty("user.dir");
+		String relativelyPath = System.getProperty("user.dir");// 获取工程目录
 		this.path = relativelyPath + "\\Address.txt";
 		timer = new long[10];
-		// 0~3存放artJudge,4~7存放execJudge,8、9存放impJudge
-		for (int i = 0; i < timer.length; i++) {
+		for (int i = 0; i < timer.length; i++) {// 0~3存放artJudge,4~7存放execJudge,8、9存放impJudge
 			timer[i] = 0;
 		}
 		this.isLink = BroadcastIP.getLink();
@@ -107,7 +106,7 @@ public class ReceIP implements Runnable {
 					br.close();
 					fr.close();
 				} catch (IOException e) {
-					logger.error(e.getMessage());
+					logger.error(e.toString());
 					e.printStackTrace();
 				}
 			}

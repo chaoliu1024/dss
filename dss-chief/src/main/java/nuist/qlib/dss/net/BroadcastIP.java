@@ -60,7 +60,6 @@ public class BroadcastIP implements Runnable // 发送
 					}
 					isLink = true;
 				} else {
-					// System.out.println("网络未连接");
 					if (isLink) {
 						Display.getDefault().syncExec(new Runnable() { // 非SWT线程无法修改SWT界面，必须调用SWT线程进行调用
 									public void run() {
