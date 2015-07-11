@@ -148,9 +148,7 @@ public class ServerInputThread extends Thread {
 
 /**
  * @ClassName: AdjustDialog
- * @Description: TODO(调整分数的指令提示)
  * @author czf
- * @date 2014年5月2日 上午11:14:20
  * 
  */
 class AdjustDialog extends Dialog {
@@ -162,7 +160,6 @@ class AdjustDialog extends Dialog {
 	}
 
 	protected Point getInitialSize() {
-		// TODO Auto-generated method stub
 		return new Point(100, 120);
 	}
 

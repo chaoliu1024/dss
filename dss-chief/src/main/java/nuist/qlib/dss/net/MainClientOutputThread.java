@@ -62,7 +62,6 @@ public class MainClientOutputThread {
 	/**
 	 * @author liuchao
 	 * @version 2014-4-22 上午9:39:42
-	 * @Description: TODO
 	 * @param scoreReceiver
 	 * @param artScore1
 	 * @param artScore2
@@ -122,8 +121,7 @@ public class MainClientOutputThread {
 	}
 
 	/**
-	 * @Title: sendCommand
-	 * @Description: TODO(给打分裁判发送指令)
+	 * 给打分裁判发送指令
 	 * @param commmandReceiver
 	 * @param command
 	 * @return
