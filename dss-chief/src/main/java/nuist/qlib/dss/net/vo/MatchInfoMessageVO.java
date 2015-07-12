@@ -1,16 +1,12 @@
 package nuist.qlib.dss.net.vo;
 
-import java.io.Serializable;
-
+import nuist.qlib.dss.constant.MessageType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import nuist.qlib.dss.constant.MessageType;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class MatchInfoMessageVO extends BaseMessageVO implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class MatchInfoMessageVO extends BaseMessageVO {
 
 	/**
 	 * 参赛单位
@@ -27,11 +23,8 @@ public class MatchInfoMessageVO extends BaseMessageVO implements Serializable {
 	 */
 	private String matchName;
 
-	@Override
-	public MessageType messageType() {
-		return MessageType.MATCHINFO;
+	public MatchInfoMessageVO() {
+		this.setMessageType(MessageType.MATCHINFO);
 	}
-
-	//
 
 }

@@ -44,4 +44,62 @@ public enum RoleType {
 	@Getter
 	private String keyWord;
 
+	/**
+	 * 是否为艺术裁判
+	 * 
+	 * @return
+	 * @since DSS 1.0
+	 */
+	public boolean isArtJudge() {
+		if (this.getKeyWord().startsWith("art")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 是否为完成裁判
+	 * 
+	 * @return
+	 * @since DSS 1.0
+	 */
+	public boolean isExecJudge() {
+		if (this.getKeyWord().startsWith("exec")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 是否为舞步裁判
+	 * 
+	 * @return
+	 * @since DSS 1.0
+	 */
+	public boolean isImpJudge() {
+		if (this.getKeyWord().startsWith("imp")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 根据名称获取RoleType
+	 * 
+	 * @param name
+	 * @return
+	 * @since DSS 1.0
+	 */
+	public static RoleType praseName(String name) {
+		for (RoleType type : RoleType.values()) {
+			if (name != null && name.equalsIgnoreCase(type.getName())) {
+				return type;
+			}
+		}
+		return null;
+	}
+
 }
