@@ -1,16 +1,14 @@
 package nuist.qlib.dss.net.vo;
 
-import java.io.Serializable;
+import java.util.Map;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import nuist.qlib.dss.constant.MessageType;
+import nuist.qlib.dss.constant.RoleType;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class AllScoreMessageVO extends BaseMessageVO implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class AllScoreMessageVO extends BaseMessageVO {
 
 	/**
 	 * 艺术得分01
@@ -33,6 +31,11 @@ public class AllScoreMessageVO extends BaseMessageVO implements Serializable {
 	private float artScore04;
 
 	/**
+	 * 艺术总分
+	 */
+	private float artTotalScore;
+
+	/**
 	 * 完成得分01
 	 */
 	private float execScore01;
@@ -53,6 +56,11 @@ public class AllScoreMessageVO extends BaseMessageVO implements Serializable {
 	private float execScore04;
 
 	/**
+	 * 完成总分
+	 */
+	private float execTotalScore;
+
+	/**
 	 * 舞步得分01
 	 */
 	private float impScore01;
@@ -62,11 +70,24 @@ public class AllScoreMessageVO extends BaseMessageVO implements Serializable {
 	 */
 	private float impScore02;
 
-	@Override
-	public MessageType messageType() {
-		return MessageType.SCORE;
-	}
+	/**
+	 * 舞步总分
+	 */
+	private float impTotalScore;
 
-	//
+	/**
+	 * 裁判长减分
+	 */
+	private float subScore;
+
+	/**
+	 * 总得分
+	 */
+	private float totalScore;
+	
+	/**
+	 * 各裁判无效分次数
+	 */
+	private Map<RoleType, Integer> invaildNum;
 
 }
