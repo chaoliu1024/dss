@@ -7,6 +7,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.Callable;
 
+import net.sf.json.JSONObject;
+import nuist.qlib.dss.net.util.NetPropertiesUtil;
+import nuist.qlib.dss.net.vo.AllScoreMessageVO;
+import nuist.qlib.dss.net.vo.CommandMessageVO;
+import nuist.qlib.dss.net.vo.MatchInfoMessageVO;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -17,50 +23,27 @@ public class ClientOutputThread implements Callable<Integer> {
 	private Socket socket;
 	private String ip;
 	private String s;
-	private Logger logger = Logger.getLogger(ClientOutputThread.class.getName());
+	private Logger logger = Logger
+			.getLogger(ClientOutputThread.class.getName());
 
-	/*给裁判长发送所有打分信息*/
-	public ClientOutputThread(String ip, String artScore1,
-			String artScore2, String artScore3, String artScore4,
-			String artTotalScore, String completionScore1,
-			String completionScore2, String completionScore3,
-			String completionScore4, String completionTotalScore,
-			String difficultScore, String difficultSubScore,
-			String deduction_score, String total) { // 发送打分信息
-
-		this.ip = ip;
-		this.s = "all" + "/" + artScore1 + "/" + artScore2 + "/" + artScore3
-				+ "/" + artScore4 + "/" + artTotalScore + "/"
-				+ completionScore1 + "/" + completionScore2 + "/"
-				+ completionScore3 + "/" + completionScore4 + "/"
-				+ completionTotalScore + "/" + difficultScore + "/"
-				+ difficultSubScore + "/" + deduction_score + "/" + total; 
-	}
-	
-	/*给裁判长和裁判发送队伍信息*/
-	public ClientOutputThread(String ip, String matchUnit, String matchCategory) {
-		this.ip = ip;
-		this.s = "infor1" + "/" + matchUnit + "/" + matchCategory + "/"; 
+	/* 给高级裁判组发送所有打分信息 */
+	public ClientOutputThread(AllScoreMessageVO allScoreMessageVO) {
+		this.ip = allScoreMessageVO.getTargetIp();
+		JSONObject jsonObject = JSONObject.fromObject(allScoreMessageVO);
+		this.s = jsonObject == null ? null : jsonObject.toString();
 	}
 
-	/*给裁判长和裁判发送比赛信息*/
-	public ClientOutputThread(String ip, String matchUnit,
-			String matchCategory, String matchName) {
-		this.ip = ip;
-		this.s = "infor2" + "/" + matchUnit + "/" + matchCategory + "/"
-				+ matchName + "/"; 
+	/* 给高级裁判组和裁判发送比赛信息 */
+	public ClientOutputThread(MatchInfoMessageVO matchInfoMessageVO) {
+		this.ip = matchInfoMessageVO.getTargetIp();
+		JSONObject jsonObject = JSONObject.fromObject(matchInfoMessageVO);
+		this.s = jsonObject == null ? null : jsonObject.toString();
 	}
-	
-	public ClientOutputThread(String ip, String command) { // 发送调分指令
-		
-		this.ip = ip;
-		this.s = "Command" + "/" + command;
-	}
-	
-	public ClientOutputThread(String ip) { // 发送队伍信息
-		
-		this.ip = ip;
-		this.s = "infor3" + "/";
+
+	public ClientOutputThread(CommandMessageVO commandMessageVO) { // 发送调分指令
+		this.ip = commandMessageVO.getTargetIp();
+		JSONObject jsonObject = JSONObject.fromObject(commandMessageVO);
+		this.s = jsonObject == null ? null : jsonObject.toString();
 	}
 
 	public Integer call() {
@@ -72,11 +55,12 @@ public class ClientOutputThread implements Callable<Integer> {
 			os.flush();
 			os.close();
 			socket.close();
-		} catch (UnknownHostException e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			return -1;
-		} catch (ConnectException e) {
+		} catch (UnknownHostException | ConnectException e) {
+			try {
+				NetPropertiesUtil.removeIPAddress(ip);
+			} catch (IOException e1) {
+				return -1;
+			}
 			logger.error(e.getMessage());
 			e.printStackTrace();
 			return -1;

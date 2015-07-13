@@ -1,40 +1,37 @@
 package nuist.qlib.dss.net;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.sf.json.JSONObject;
+import nuist.qlib.dss.constant.RoleType;
+import nuist.qlib.dss.net.util.NetPropertiesUtil;
+import nuist.qlib.dss.net.vo.IPMessageVO;
+
+import org.apache.log4j.Logger;
 
 /**
  * 
  * 接收IP的线程
  * 
  */
-public class ReceIP implements Runnable {
+public class ReceIP implements Runnable // 接收
+{
 	private MulticastSocket dsock; // 广播套接字
 	private String host;
-	private Logger logger = LoggerFactory.getLogger(ReceIP.class.getName());;
-	private String path;
+	private Logger logger;
 	private static long[] timer;
 	boolean isLink;
 
 	public ReceIP(MulticastSocket dsock) {
+		logger = Logger.getLogger(ReceIP.class.getName());
 		this.dsock = dsock;
 		this.host = "239.0.0.1";
-		// 获取工程目录
-		String relativelyPath = System.getProperty("user.dir");
-		this.path = relativelyPath + "\\Address.txt";
 		timer = new long[10];
-		// 0~3存放artJudge,4~7存放execJudge,8、9存放impJudge
-		for (int i = 0; i < timer.length; i++) {
+		for (int i = 0; i < timer.length; i++) {// 0~3存放artJudge,4~7存放execJudge,8、9存放impJudge
 			timer[i] = 0;
 		}
 		this.isLink = BroadcastIP.getLink();
@@ -46,69 +43,39 @@ public class ReceIP implements Runnable {
 			ip = InetAddress.getByName(this.host);
 			dsock.joinGroup(ip); // 加入到广播组
 			while (true) {
+				// 接收信息
 				byte[] data = new byte[256];
-
 				DatagramPacket packet = new DatagramPacket(data, data.length);
-
 				dsock.receive(packet);
+
+				// 解析接收的信息
 				String message = new String(packet.getData(), 0,
 						packet.getLength());
+				JSONObject jsonObject = JSONObject.fromObject(message);
+				IPMessageVO ipMessageVO = (IPMessageVO) JSONObject.toBean(
+						jsonObject, IPMessageVO.class);
+
 				// 根据角色更新该角色记录的时间
-				String role = message.split("/")[0];
-				if (role != null && !role.equals("")) {
-					if (role.startsWith("art")) {// 接受到的为艺术裁判
+				RoleType roleType = ipMessageVO.getRoleType();
+				if (roleType == null) {
+					continue;
+				} else {
+					if (roleType.isArtJudge()) {// 接受到的为艺术裁判
 						int roleIndex = Integer.valueOf((String) message
 								.split("/")[0].subSequence(8, 10));// 裁判序号
 						timer[roleIndex - 1] = System.currentTimeMillis();
-					} else if (role.startsWith("exec")) {// 接受到的完成裁判
+					} else if (roleType.isExecJudge()) {// 接受到的完成裁判
 						int roleIndex = Integer.valueOf((String) message
 								.split("/")[0].subSequence(9, 11));// 裁判序号
 						timer[3 + roleIndex] = System.currentTimeMillis();
-					} else if (role.startsWith("imp")) {// 接受到的印象裁判
+					} else if (roleType.isImpJudge()) {// 接受到的舞步裁判
 						int roleIndex = Integer.valueOf((String) message
 								.split("/")[0].subSequence(8, 10));// 裁判序号
 						timer[7 + roleIndex] = System.currentTimeMillis();
 					}
-				}
-				// 将接受的消息存入Address.txt文件
-				try {
-					FileWriter fw = new FileWriter(path, true);
-					PrintWriter pw = new PrintWriter(fw);
-					FileReader fr = new FileReader(path);
-					BufferedReader br = new BufferedReader(fr);
 
-					while (true) {
-						String messageTemp = br.readLine();
-						if (messageTemp == null) {
-							pw.println(message);
-							break;
-						} else if (messageTemp.equalsIgnoreCase(message))
-							break;
-						else {
-							if (messageTemp.split("/")[0]
-									.equalsIgnoreCase(message.split("/")[0])
-									|| messageTemp.split("/")[1]
-											.equalsIgnoreCase(message
-													.split("/")[1])) { // 若身份一样ip不一样或ip一样身份不一样则更新
-								fw.close();
-								pw.close();
-								fw = new FileWriter(path);
-								fw.write("");
-								pw = new PrintWriter(fw);
-								break;
-								// pw.println(message); // 写入新的IP
-							} else
-								continue;
-						}
-
-					}
-					pw.close();
-					fw.close();
-					br.close();
-					fr.close();
-				} catch (IOException e) {
-					logger.error(e.getMessage());
-					e.printStackTrace();
+					// 将接受的消息存入address.properties文件
+					NetPropertiesUtil.saveIPAddress(ipMessageVO);
 				}
 			}
 		} catch (UnknownHostException e1) {

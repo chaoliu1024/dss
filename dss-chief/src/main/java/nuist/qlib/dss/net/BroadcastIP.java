@@ -5,6 +5,11 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 
+import net.sf.json.JSONObject;
+import nuist.qlib.dss.constant.RoleType;
+import nuist.qlib.dss.net.util.IPUtil;
+import nuist.qlib.dss.net.vo.IPMessageVO;
+
 import org.apache.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -22,8 +27,6 @@ public class BroadcastIP implements Runnable // 发送
 	private MulticastSocket dsock;
 	private int port;
 	private String host;
-	private String data;
-	private InetAddress addr;
 	private Logger logger;
 	private static boolean isLink = true;// 是否联网
 
@@ -38,12 +41,20 @@ public class BroadcastIP implements Runnable // 发送
 	public void run() {
 		try {
 			while (true) {
-				addr = InetAddress.getLocalHost(); // 本地IP
-				// System.out.println("发送："+addr.getHostAddress()+"");
-				data = "Editor/" + InetAddress.getLocalHost().getHostAddress(); // 编辑员IP
-				if (addr != null && !addr.getHostAddress().equals("127.0.0.1")) {
-					DatagramPacket dataPack = // 数据打包
-					new DatagramPacket(data.getBytes(), data.length(),
+				String localAddress = IPUtil.getLocalAddress(); // 获取本地IP
+				if (localAddress != null && !"127.0.0.1".equals(localAddress)) {
+					// 设置IP消息
+					IPMessageVO ipMessageVO = new IPMessageVO();
+					ipMessageVO.setRoleType(RoleType.EDITOR);
+					ipMessageVO.setOriginalIp(localAddress);
+					// 对象转json
+					JSONObject jsonObject = JSONObject.fromObject(ipMessageVO);
+					// json转字符串
+					String message = jsonObject.toString();
+
+					// 数据打包
+					DatagramPacket dataPack = new DatagramPacket(
+							message.getBytes(), message.length(),
 							InetAddress.getByName(host), // 广播
 							port // 目标端口
 					);
@@ -60,7 +71,6 @@ public class BroadcastIP implements Runnable // 发送
 					}
 					isLink = true;
 				} else {
-					// System.out.println("网络未连接");
 					if (isLink) {
 						Display.getDefault().syncExec(new Runnable() { // 非SWT线程无法修改SWT界面，必须调用SWT线程进行调用
 									public void run() {

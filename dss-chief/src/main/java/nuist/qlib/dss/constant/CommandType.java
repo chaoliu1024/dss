@@ -12,7 +12,7 @@ public enum CommandType {
 
 	DOWN("下调", "down"),
 
-	OK("确定", "ok");
+	OK("确认", "ok");
 
 	CommandType(String name, String keyWord) {
 		this.name = name;

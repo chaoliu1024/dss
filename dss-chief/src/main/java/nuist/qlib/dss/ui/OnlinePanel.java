@@ -4,11 +4,14 @@
 
 package nuist.qlib.dss.ui;
 
+import nuist.qlib.dss.constant.CommandType;
+import nuist.qlib.dss.constant.RoleType;
 import nuist.qlib.dss.dao.AddressManager;
 import nuist.qlib.dss.dao.OnlineDao;
 import nuist.qlib.dss.net.BroadcastIP;
 import nuist.qlib.dss.net.MainClientOutputThread;
 import nuist.qlib.dss.net.ReceIP;
+import nuist.qlib.dss.net.vo.CommandMessageVO;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -725,11 +728,14 @@ public class OnlinePanel extends Composite {
 			upScore.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// TODO Auto-generated method stub
-					String commandReceiver[] = { toEnglishName(role) };
 					MainClientOutputThread mainClientOutputThread = new MainClientOutputThread();
-					int sum = mainClientOutputThread.sendCommand(
-							commandReceiver, "up");
+
+					CommandMessageVO commandMessageVO = new CommandMessageVO();
+					commandMessageVO.setRoleType(RoleType.praseName(role));
+					commandMessageVO.setCommandType(CommandType.UP);
+
+					int sum = mainClientOutputThread
+							.sendCommand(commandMessageVO);
 					if (sum == -1) {// 发送失败
 						Display.getDefault().syncExec(new Runnable() {
 							public void run() {
@@ -762,12 +768,14 @@ public class OnlinePanel extends Composite {
 			downScore.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// TODO Auto-generated method stub
-					toEnglishName(role);
-					String commandReceiver[] = { toEnglishName(role) };
 					MainClientOutputThread mainClientOutputThread = new MainClientOutputThread();
-					int sum = mainClientOutputThread.sendCommand(
-							commandReceiver, "down");
+
+					CommandMessageVO commandMessageVO = new CommandMessageVO();
+					commandMessageVO.setRoleType(RoleType.praseName(role));
+					commandMessageVO.setCommandType(CommandType.DOWN);
+
+					int sum = mainClientOutputThread
+							.sendCommand(commandMessageVO);
 					if (sum == -1) {// 发送失败
 						Display.getDefault().syncExec(new Runnable() {
 							public void run() {
@@ -800,12 +808,14 @@ public class OnlinePanel extends Composite {
 			ok.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// TODO Auto-generated method stub
-					toEnglishName(role);
-					String commandReceiver[] = { toEnglishName(role) };
 					MainClientOutputThread mainClientOutputThread = new MainClientOutputThread();
-					int sum = mainClientOutputThread.sendCommand(
-							commandReceiver, "ok");
+
+					CommandMessageVO commandMessageVO = new CommandMessageVO();
+					commandMessageVO.setRoleType(RoleType.praseName(role));
+					commandMessageVO.setCommandType(CommandType.OK);
+
+					int sum = mainClientOutputThread
+							.sendCommand(commandMessageVO);
 					if (sum == -1) {// 发送失败
 						Display.getDefault().syncExec(new Runnable() {
 							public void run() {
@@ -842,20 +852,6 @@ public class OnlinePanel extends Composite {
 			// TODO Auto-generated method stub
 		}
 
-		public String toEnglishName(String roleName) {
-			String chineseName[] = { "艺术裁判01", "艺术裁判02", "艺术裁判03", "艺术裁判04",
-					"完成裁判01", "完成裁判02", "完成裁判03", "完成裁判04", "总体评价裁判01",
-					"总体评价裁判02" };
-			String englishName[] = { "artJudge01", "artJudge02", "artJudge03",
-					"artJudge04", "execJudge01", "execJudge02", "execJudge03",
-					"execJudge04", "impJudge01", "impJudge02" };
-			for (int i = 0; i < chineseName.length; i++) {
-				if (roleName.equals(chineseName[i])) {
-					return englishName[i];
-				}
-			}
-			return null;
-		}
 	}
 
 	/**

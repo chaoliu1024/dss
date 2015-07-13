@@ -3,7 +3,12 @@ package nuist.qlib.dss.net;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import net.sf.json.JSONObject;
+import nuist.qlib.dss.constant.RoleType;
+import nuist.qlib.dss.net.vo.ScoreMessageVO;
 import nuist.qlib.dss.ui.MatchPanel;
 
 import org.apache.log4j.Logger;
@@ -26,6 +31,7 @@ public class ServerInputThread extends Thread {
 	// tcp/ip协议
 	private Socket socket;
 	private Logger logger;
+	private static final String regex = "\\d+";
 
 	public ServerInputThread(Socket socket) {
 		logger = Logger.getLogger(ServerInputThread.class.getName());
@@ -46,95 +52,116 @@ public class ServerInputThread extends Thread {
 			if (length == -1) {
 				return;
 			}
-			String str = new String(by, 0, length, "utf-8");
-			// 打印出字符串
-			final String message[] = str.split("/");
-			// 接收得分
-			if (message[0].contains("art")) {// 艺术打分
-				switch (Integer.valueOf(message[1])) {
+
+			// 解析接收的信息
+			String message = new String(by, 0, length, "utf-8");
+			JSONObject jsonObject = JSONObject.fromObject(message);
+			ScoreMessageVO scoreMessageVO = (ScoreMessageVO) JSONObject.toBean(
+					jsonObject, ScoreMessageVO.class);
+
+			// 角色类型
+			RoleType roleType = scoreMessageVO.getRoleType();
+			if (roleType == null) {
+				return;
+			}
+			// 角色编号
+			int roleNum;
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(roleType.getKeyWord());
+			if (matcher.find()) {
+				roleNum = Integer.parseInt(matcher.group());
+			} else {
+				return;
+			}
+			// 根据角色和角色编号显示得分
+			if (roleType.isArtJudge()) {// 艺术打分
+				switch (roleNum) {
 				case 1:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getArt_score1().setText(message[2]);
+							MatchPanel.getArt_score1().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				case 2:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getArt_score2().setText(message[2]);
+							MatchPanel.getArt_score2().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				case 3:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getArt_score3().setText(message[2]);
+							MatchPanel.getArt_score3().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				case 4:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getArt_score4().setText(message[2]);
+							MatchPanel.getArt_score4().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				}
-			} else if (message[0].contains("exec")) {// 完成打分
-				switch (Integer.valueOf(message[1])) {
+			} else if (roleType.isExecJudge()) {// 完成打分
+				switch (roleNum) {
 				case 1:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getexec_score1().setText(message[2]);
+							MatchPanel.getexec_score1().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				case 2:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getexec_score2().setText(message[2]);
+							MatchPanel.getexec_score2().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				case 3:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getexec_score3().setText(message[2]);
+							MatchPanel.getexec_score3().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				case 4:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getexec_score4().setText(message[2]);
+							MatchPanel.getexec_score4().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				}
-			} else if (message[0].contains("imp")) {// 印象打分
-				switch (Integer.valueOf(message[1])) {
+			} else if (roleType.isImpJudge()) {// 印象打分
+				switch (roleNum) {
 				case 1:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getImp_score1().setText(message[2]);
+							MatchPanel.getImp_score1().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
 				case 2:
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
-							MatchPanel.getImp_score2().setText(message[2]);
+							MatchPanel.getImp_score2().setText(
+									String.valueOf(scoreMessageVO.getScore()));
 						}
 					});
 					break;
-				// case 3:
-				// Display.getDefault().syncExec(new Runnable() {
-				// public void run() {
-				// MatchPanel.getImp_score3().setText(message[2]);
-				// }
-				// });
-				// break;
 				}
 			}
 			is.close();
@@ -148,9 +175,7 @@ public class ServerInputThread extends Thread {
 
 /**
  * @ClassName: AdjustDialog
- * @Description: TODO(调整分数的指令提示)
  * @author czf
- * @date 2014年5月2日 上午11:14:20
  * 
  */
 class AdjustDialog extends Dialog {
@@ -162,7 +187,6 @@ class AdjustDialog extends Dialog {
 	}
 
 	protected Point getInitialSize() {
-		// TODO Auto-generated method stub
 		return new Point(100, 120);
 	}
 

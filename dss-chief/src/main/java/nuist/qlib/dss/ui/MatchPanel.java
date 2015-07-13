@@ -7,8 +7,8 @@ package nuist.qlib.dss.ui;
 import java.util.HashMap;
 import java.util.List;
 
-import nuist.qlib.dss.dao.AddressManager;
 import nuist.qlib.dss.net.MainClientOutputThread;
+import nuist.qlib.dss.net.vo.MatchInfoMessageVO;
 import nuist.qlib.dss.scoreManager.QueryScore;
 import nuist.qlib.dss.teamManager.MatchTeamScore;
 import nuist.qlib.dss.util.CalcScore;
@@ -129,14 +129,6 @@ public class MatchPanel extends Composite {
 
 	// 记录员发送信息接口
 	private MainClientOutputThread mainClientOutputThread = new MainClientOutputThread();
-
-	// 地址管理
-	private AddressManager addressManager = new AddressManager();
-
-	// 参赛队伍接收者名称(裁判长和裁判)
-	private String teamReceiver[] = { "artJudge01", "artJudge02", "artJudge03",
-			"artJudge04", "execJudge01", "execJudge02", "execJudge03",
-			"execJudge04", "impJudge01", "impJudge02" };
 
 	/**
 	 * Create the execosite.
@@ -672,9 +664,13 @@ public class MatchPanel extends Composite {
 						/********************************** 发送队伍信息 ***********************************/
 						new Thread() {
 							public void run() {
+								MatchInfoMessageVO matchInfoMessageVO =  new MatchInfoMessageVO();
+								matchInfoMessageVO.setMatchCategory(category);
+								matchInfoMessageVO.setMatchName(matchName);
+								matchInfoMessageVO.setMatchUnit(team);
+								
 								int sum = mainClientOutputThread
-										.sendTeam(teamReceiver, team, category,
-												matchName);
+										.sendTeam(matchInfoMessageVO);
 								if (sum == -1) {// 发送失败
 									sendFailWaing();
 								} else if (sum == 0) {// 无ip
@@ -939,9 +935,12 @@ public class MatchPanel extends Composite {
 							/*********************** 发送队伍信息给裁判长和打分裁判 ******************************/
 							new Thread() {
 								public void run() {
-									int sum = mainClientOutputThread.sendTeam(
-											teamReceiver, team, category,
-											matchName);
+									MatchInfoMessageVO matchInfoMessageVO =  new MatchInfoMessageVO();
+									matchInfoMessageVO.setMatchCategory(category);
+									matchInfoMessageVO.setMatchName(matchName);
+									matchInfoMessageVO.setMatchUnit(team);
+									
+									int sum = mainClientOutputThread.sendTeam(matchInfoMessageVO);
 									if (sum == -1) {
 										sendFailWaing();
 									} else if (sum == 0) {// 无ip
@@ -988,8 +987,12 @@ public class MatchPanel extends Composite {
 							}
 						});
 						if (totalScore == null || totalScore.equals("")) {
-							int sum = mainClientOutputThread.sendTeam(
-									teamReceiver, team, category, matchName);
+							MatchInfoMessageVO matchInfoMessageVO =  new MatchInfoMessageVO();
+							matchInfoMessageVO.setMatchCategory(category);
+							matchInfoMessageVO.setMatchName(matchName);
+							matchInfoMessageVO.setMatchUnit(team);
+							
+							int sum = mainClientOutputThread.sendTeam(matchInfoMessageVO);
 							if (sum == -1) {
 								sendFailWaing();
 							} else if (sum == 0) {// 无ip
@@ -1231,7 +1234,6 @@ public class MatchPanel extends Composite {
 	}
 
 	private void sendFailWaing() {
-		addressManager.clearIP();
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				MessageBox box = new MessageBox(ref_edit_shell, SWT.OK);
