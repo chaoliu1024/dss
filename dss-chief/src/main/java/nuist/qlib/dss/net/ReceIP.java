@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.UnknownHostException;
 
 import net.sf.json.JSONObject;
 import nuist.qlib.dss.constant.RoleType;
@@ -20,15 +19,13 @@ import org.apache.log4j.Logger;
  */
 public class ReceIP implements Runnable // 接收
 {
-	private MulticastSocket dsock; // 广播套接字
 	private String host;
 	private Logger logger;
 	private static long[] timer;
 	boolean isLink;
 
-	public ReceIP(MulticastSocket dsock) {
+	public ReceIP() {
 		logger = Logger.getLogger(ReceIP.class.getName());
-		this.dsock = dsock;
 		this.host = "239.0.0.1";
 		timer = new long[10];
 		for (int i = 0; i < timer.length; i++) {// 0~3存放artJudge,4~7存放execJudge,8、9存放impJudge
@@ -38,15 +35,17 @@ public class ReceIP implements Runnable // 接收
 	}
 
 	public void run() {
-		InetAddress ip;
+		MulticastSocket receSocket = null;
+		InetAddress ip = null;
 		try {
+			receSocket = new MulticastSocket(9999);
 			ip = InetAddress.getByName(this.host);
-			dsock.joinGroup(ip); // 加入到广播组
+			receSocket.joinGroup(ip); // 加入到广播组
 			while (true) {
 				// 接收信息
 				byte[] data = new byte[256];
 				DatagramPacket packet = new DatagramPacket(data, data.length);
-				dsock.receive(packet);
+				receSocket.receive(packet);
 
 				// 解析接收的信息
 				String message = new String(packet.getData(), 0,
@@ -78,15 +77,20 @@ public class ReceIP implements Runnable // 接收
 					NetPropertiesUtil.saveIPAddress(ipMessageVO);
 				}
 			}
-		} catch (UnknownHostException e1) {
-			logger.error("IP为未知地址!");
-			throw new RuntimeException("IP为未知地址!");
-		} catch (IOException e1) {
+		} catch (IOException e) {
 			logger.error("加入广播组失败!");
 			throw new RuntimeException("加入广播组失败!");
 		} finally {
-			dsock.close();
-			logger.error("多播套接字已关闭！");
+			if (receSocket != null) {
+				receSocket.close();
+				logger.error("多播套接字已关闭！");
+				// 重新打开
+				try {
+					receSocket = new MulticastSocket(9999);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
