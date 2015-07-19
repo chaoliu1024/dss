@@ -3,6 +3,9 @@ package nuist.qlib.dss.net;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+
+import nuist.qlib.dss.net.util.ThreadPoolUtil;
 
 import org.apache.log4j.Logger;
 
@@ -23,9 +26,10 @@ public class MainServerInputThread implements Runnable {
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(6666);
+			ExecutorService executor = ThreadPoolUtil.getExecutorServiceInstance();
 			while (true) {
 				Socket socket = serverSocket.accept(); // 监听
-				new ServerInputThread(socket).start(); // 监听到数据之后启用线程
+				executor.submit(new ServerInputThread(socket));// 监听到数据之后启用线程
 			}
 		} catch (IOException e) {
 			logger.error(e.getMessage());
