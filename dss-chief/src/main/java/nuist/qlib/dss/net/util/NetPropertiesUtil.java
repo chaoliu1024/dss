@@ -171,4 +171,21 @@ public class NetPropertiesUtil {
 		out.close();
 	}
 
+	/**
+	 * 清空所有ip
+	 * 
+	 * @throws IOException
+	 * 
+	 * @since DSS 1.0
+	 */
+	public static void clearAll() throws IOException {
+		Properties pros = new Properties();
+		InputStream in = NetPropertiesUtil.class
+				.getResourceAsStream(IP_ADDRESS_FILE);
+		pros.load(in);
+		in.close();
+
+		pros.clear();
+	}
+
 }

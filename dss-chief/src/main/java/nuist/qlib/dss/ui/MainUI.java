@@ -4,14 +4,13 @@
 
 package nuist.qlib.dss.ui;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import nuist.qlib.dss.net.BroadcastIP;
 import nuist.qlib.dss.net.MainServerInputThread;
 import nuist.qlib.dss.net.ReceIP;
+import nuist.qlib.dss.net.util.NetPropertiesUtil;
 import nuist.qlib.dss.net.util.ThreadPoolUtil;
 
 import org.eclipse.swt.SWT;
@@ -137,10 +136,7 @@ public class MainUI {
 
 		try {
 			// 打开时清空address.txt
-			File f = new File("Address.txt");
-			FileWriter fw = new FileWriter(f);
-			fw.write("");
-			fw.close();
+			NetPropertiesUtil.clearAll();
 			// 启动组播IP的线程
 			ThreadPoolUtil.getScheduledExecutorServiceInstance()
 					.scheduleAtFixedRate(new BroadcastIP(shell), 0, 5,
@@ -148,7 +144,8 @@ public class MainUI {
 			// 启动接收IP的线程
 			ThreadPoolUtil.getExecutorServiceInstance().submit(new ReceIP());
 			// 启动接收打分信息的线程
-			ThreadPoolUtil.getExecutorServiceInstance().submit(new MainServerInputThread());
+			ThreadPoolUtil.getExecutorServiceInstance().submit(
+					new MainServerInputThread());
 		} catch (IOException e) {
 			logger.error(e.toString());
 			e.printStackTrace();
