@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 
 import nuist.qlib.dss.net.util.NetPropertiesUtil;
+import nuist.qlib.dss.net.util.ThreadPoolUtil;
 import nuist.qlib.dss.net.vo.AllScoreMessageVO;
 import nuist.qlib.dss.net.vo.CommandMessageVO;
 import nuist.qlib.dss.net.vo.MatchInfoMessageVO;
@@ -36,12 +38,12 @@ public class MainClientOutputThread {
 			if (list.size() == 0) {// 未收到ip
 				sum = 0;
 			} else {
+				ExecutorService executor = ThreadPoolUtil
+						.getExecutorServiceInstance();
 				for (int i = 0; i < list.size(); i++) {
 					matchInfoMessageVO.setTargetIp(list.get(i));
-					FutureTask<Integer> task = new FutureTask<Integer>(
-							new ClientOutputThread(matchInfoMessageVO));
-					tasks.add(task);
-					new Thread(task).start();
+					tasks.add((FutureTask<Integer>) executor
+							.submit(new ClientOutputThread(matchInfoMessageVO)));
 				}
 
 				for (FutureTask<Integer> task : tasks)
@@ -72,12 +74,12 @@ public class MainClientOutputThread {
 			if (list.size() == 0) {// 未收到ip
 				sum = 0;
 			} else {
+				ExecutorService executor = ThreadPoolUtil
+						.getExecutorServiceInstance();
 				for (int i = 0; i < list.size(); i++) {
 					allScoreMessageVO.setTargetIp(list.get(i));
-					FutureTask<Integer> task = new FutureTask<Integer>(
-							new ClientOutputThread(allScoreMessageVO));
-					tasks.add(task);
-					new Thread(task).start();
+					tasks.add((FutureTask<Integer>) executor
+							.submit(new ClientOutputThread(allScoreMessageVO)));
 				}
 
 				for (FutureTask<Integer> task : tasks)
@@ -109,9 +111,10 @@ public class MainClientOutputThread {
 
 			// 发送
 			commandMessageVO.setTargetIp(ip);
-			FutureTask<Integer> task = new FutureTask<Integer>(
-					new ClientOutputThread(commandMessageVO));
-			new Thread(task).start();
+			ExecutorService executor = ThreadPoolUtil
+					.getExecutorServiceInstance();
+			FutureTask<Integer> task = (FutureTask<Integer>) executor
+					.submit(new ClientOutputThread(commandMessageVO));
 			return task.get();
 		} catch (IOException e) {
 			return -1;

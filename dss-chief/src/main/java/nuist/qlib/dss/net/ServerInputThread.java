@@ -27,7 +27,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
  * 类名：ServerInputThread 功能：建立主服务器的输入线程类，接收客户端的信息
  */
 
-public class ServerInputThread extends Thread {
+public class ServerInputThread implements Runnable {
 	// tcp/ip协议
 	private Socket socket;
 	private Logger logger;

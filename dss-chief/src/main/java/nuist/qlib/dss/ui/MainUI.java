@@ -4,15 +4,14 @@
 
 package nuist.qlib.dss.ui;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MulticastSocket;
-import java.net.ServerSocket;
+import java.util.concurrent.TimeUnit;
 
 import nuist.qlib.dss.net.BroadcastIP;
 import nuist.qlib.dss.net.MainServerInputThread;
 import nuist.qlib.dss.net.ReceIP;
+import nuist.qlib.dss.net.util.NetPropertiesUtil;
+import nuist.qlib.dss.net.util.ThreadPoolUtil;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ShellAdapter;
@@ -137,22 +136,16 @@ public class MainUI {
 
 		try {
 			// 打开时清空address.txt
-			File f = new File("Address.txt");
-			FileWriter fw = new FileWriter(f);
-			fw.write("");
-			fw.close();
+			NetPropertiesUtil.clearAll();
 			// 启动组播IP的线程
-			MulticastSocket sendSocket;
-			sendSocket = new MulticastSocket(9998);
-			new Thread(new BroadcastIP(sendSocket, shell)).start();
+			ThreadPoolUtil.getScheduledExecutorServiceInstance()
+					.scheduleAtFixedRate(new BroadcastIP(shell), 0, 5,
+							TimeUnit.SECONDS);
 			// 启动接收IP的线程
-			MulticastSocket receSocket = new MulticastSocket(9999);
-			new Thread(new ReceIP(receSocket)).start();
+			ThreadPoolUtil.getExecutorServiceInstance().submit(new ReceIP());
 			// 启动接收打分信息的线程
-			ServerSocket serverSocket = new ServerSocket(6666);
-			MainServerInputThread mainServerInputThread = new MainServerInputThread(
-					serverSocket);
-			mainServerInputThread.start();
+			ThreadPoolUtil.getExecutorServiceInstance().submit(
+					new MainServerInputThread());
 		} catch (IOException e) {
 			logger.error(e.toString());
 			e.printStackTrace();
