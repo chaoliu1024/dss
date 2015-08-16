@@ -98,7 +98,8 @@ public class RankPanel {
 		rank_shell = new Shell(display, SWT.CLOSE | SWT.MIN);
 		rank_shell.setSize(1127, 680);
 		rank_shell.setText("舞蹈竞赛评分系统----成绩排名");
-		rank_shell.setImage(new Image(display, "img/logo.png"));
+		rank_shell.setImage(new Image(display, RankPanel.class
+				.getResourceAsStream("/img/logo.png")));
 		rank_shell.addShellListener(new ShellAdapter() {
 			public void shellClosed(ShellEvent e) {
 				MessageBox messagebox = new MessageBox(rank_shell,

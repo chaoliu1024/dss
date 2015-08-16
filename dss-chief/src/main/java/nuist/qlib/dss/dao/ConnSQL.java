@@ -4,6 +4,7 @@
 
 package nuist.qlib.dss.dao;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConnSQL {
 	private String ip;
@@ -29,14 +31,12 @@ public class ConnSQL {
 	private Connection conn;
 
 	public ConnSQL() {
-		logger = Logger.getLogger(ConnSQL.class.getName());
+		logger = LoggerFactory.getLogger(ConnSQL.class);
 		Properties props = new Properties();
 		try {
-			// String relativelyPath=System.getProperty("user.dir");
-			// InputStream in = new
-			// FileInputStream(relativelyPath+"\\dataBase.properties");
-			InputStream in = ConnSQL.class
-					.getResourceAsStream("/dataBase.properties");
+			String relativelyPath = System.getProperty("user.dir");
+			InputStream in = new FileInputStream(relativelyPath
+					+ "\\dataBase.properties");
 			props.load(in);
 			port = props.getProperty("port");
 			ip = props.getProperty("ip");
@@ -45,7 +45,7 @@ public class ConnSQL {
 			userPwd = props.getProperty("userPwd");
 			conn = connectDataBase();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -95,7 +95,7 @@ public class ConnSQL {
 			st.execute();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			logger.error(e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -138,6 +138,7 @@ public class ConnSQL {
 			conn.commit();
 			conn.setAutoCommit(true);
 		} catch (Exception e) {
+			logger.error(e.toString());
 			e.printStackTrace();
 			result = -1;
 		}
@@ -163,6 +164,7 @@ public class ConnSQL {
 			} else
 				result = -1;
 		} catch (Exception e) {
+			logger.error(e.toString());
 			e.printStackTrace();
 			result = -1;
 		}
@@ -195,6 +197,7 @@ public class ConnSQL {
 			}
 			rs.close();
 		} catch (Exception e) {
+			logger.error(e.toString());
 			e.printStackTrace();
 		}
 		return result;
@@ -219,6 +222,7 @@ public class ConnSQL {
 			} else
 				result = -1;
 		} catch (Exception e) {
+			logger.error(e.toString());
 			e.printStackTrace();
 			result = -1;
 		}
@@ -234,6 +238,7 @@ public class ConnSQL {
 				conn.close();
 			}
 		} catch (SQLException e) {
+			logger.error(e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -241,5 +246,4 @@ public class ConnSQL {
 	public Connection getConn() {
 		return conn;
 	}
-
 }

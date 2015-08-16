@@ -83,8 +83,8 @@ public class Ds {
 		shell = new Shell();
 		shell.setBackground(SWTResourceManager.getColor(0, 0, 0));
 		shell.setText("");
-		shell.setImage(new Image(shell.getDisplay(), "img/logo.png"));
-
+		shell.setImage(new Image(shell.getDisplay(), Ds.class
+				.getResourceAsStream("/img/logo.png")));
 		rec = Display.getDefault().getPrimaryMonitor().getBounds();
 		shell.setBounds(rec); // 默认为全屏
 
