@@ -141,7 +141,6 @@ public class OnlinePanel extends Composite {
 							try {
 								Thread.sleep(10 * 1000);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -661,7 +660,7 @@ public class OnlinePanel extends Composite {
 							execJudgeExpandItem.setControl(composite_2);
 							execJudgeExpandItem.setExpanded(execJudgeExpandItem
 									.getExpanded());
-							impJudgeExpandItem.setText("总体评价裁判 【" + impJudgeNum
+							impJudgeExpandItem.setText("舞步裁判 【" + impJudgeNum
 									+ "/2】");
 							impJudgeExpandItem.setHeight(composite_3
 									.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
@@ -674,7 +673,6 @@ public class OnlinePanel extends Composite {
 					try {
 						Thread.sleep(5 * 1000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						isStop = false;
 					}
@@ -685,7 +683,7 @@ public class OnlinePanel extends Composite {
 
 	/**
 	 * @ClassName: AdjustDialog
-	 * @Description: TODO(调整分数)
+	 * @Description: 调整分数
 	 * @author czf
 	 * @date 2014年5月2日 上午11:14:20
 	 * 
@@ -701,7 +699,6 @@ public class OnlinePanel extends Composite {
 		}
 
 		protected Point getInitialSize() {
-			// TODO Auto-generated method stub
 			return new Point(245, 145);
 		}
 
@@ -856,7 +853,7 @@ public class OnlinePanel extends Composite {
 
 	/**
 	 * @Title: getInstance
-	 * @Description: TODO(获取唯一实例)
+	 * @Description: 获取唯一实例
 	 * @param shell
 	 * @param parent
 	 * @param style

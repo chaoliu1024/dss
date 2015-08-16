@@ -8,11 +8,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class CalcScore {
 
 	private static double artFinalScore = 0.0;
 	private static double execFinalScore = 0.0;
 	private static double impFinalScore = 0.0;
+	private static final Logger logger = LoggerFactory
+			.getLogger(CalcScore.class);
 
 	public HashMap<String, Double> getHashJudgeScore(
 			HashMap<String, String> scores) {
@@ -41,19 +46,34 @@ public class CalcScore {
 	private Double getArtFinalScore(String art1, String art2, String art3,
 			String art4) {
 
-		return calcAvgScoreFore2Two(art1, art2, art3, art4);
+		double totalArtScore = Arith.add(
+				Arith.add(Double.parseDouble(art1), Double.parseDouble(art2)),
+				Arith.add(Double.parseDouble(art3), Double.parseDouble(art4)));
+
+		logger.debug("total Art Score is: " + totalArtScore);
+		return Arith.round(totalArtScore, 2);
 	}
 
 	private Double getExecFinalScore(String exec1, String exec2, String exec3,
 			String exec4) {
-		return calcAvgScoreFore2Two(exec1, exec2, exec3, exec4);
+
+		double totalExecScore = Arith
+				.add(Arith.add(Double.parseDouble(exec1),
+						Double.parseDouble(exec2)),
+						Arith.add(Double.parseDouble(exec3),
+								Double.parseDouble(exec4)));
+
+		logger.debug("total Exec Score is: " + totalExecScore);
+		return Arith.round(totalExecScore, 2);
 	}
 
 	private Double getImpFinalScore(String imp1, String imp2) {
-		double temp = Arith.div(
-				Arith.add(Double.parseDouble(imp1), Double.parseDouble(imp2)),
-				2.0f);
-		return Arith.round(temp, 2);
+
+		double totalImpScore = Arith.add(Double.parseDouble(imp1),
+				Double.parseDouble(imp2));
+
+		logger.debug("total Imp Score is: " + totalImpScore);
+		return Arith.round(totalImpScore, 2);
 	}
 
 	/**
@@ -69,14 +89,15 @@ public class CalcScore {
 	public Double calcTotalScore(double artFinalScore, double execFinalScore,
 			double impFinalScore, String deduFinalscore) {
 
-		Double deductionScore = 0.0;
+		double deductionScore = 0.0;
 
 		if (!deduFinalscore.equals("") && deduFinalscore != null) {
 			deductionScore = Double.parseDouble(deduFinalscore);
 		}
 
-		double totalScore = artFinalScore + execFinalScore + impFinalScore
-				- deductionScore;
+		double totalScore = Arith.sub(Arith.add(
+				Arith.add(artFinalScore, execFinalScore), impFinalScore),
+				deductionScore);
 		// 保留两位小数
 		return Arith.round(totalScore, 2);
 	}
@@ -108,7 +129,6 @@ public class CalcScore {
 
 		double totalScore = Arith.div(getMidScoreSum(scores), 2.0f);
 		String strScore = Arith.round(totalScore, 2) + "";
-
 		return Arith.round(totalScore, 2);
 	}
 
@@ -187,22 +207,28 @@ public class CalcScore {
 		List<Double> results = new ArrayList<Double>();
 
 		// 艺术分误差
-		results.add(Math.abs(Double.parseDouble(artScore01) / artFinalScore - 1));
-		results.add(Math.abs(Double.parseDouble(artScore02) / artFinalScore - 1));
-		results.add(Math.abs(Double.parseDouble(artScore03) / artFinalScore - 1));
-		results.add(Math.abs(Double.parseDouble(artScore04) / artFinalScore - 1));
+		results.add(Math.abs(Double.parseDouble(artScore01) / artFinalScore * 4
+				- 1));
+		results.add(Math.abs(Double.parseDouble(artScore02) / artFinalScore * 4
+				- 1));
+		results.add(Math.abs(Double.parseDouble(artScore03) / artFinalScore * 4
+				- 1));
+		results.add(Math.abs(Double.parseDouble(artScore04) / artFinalScore * 4
+				- 1));
 		// 完成分误差
 		results.add(Math.abs(Double.parseDouble(execScore01) / execFinalScore
-				- 1));
+				* 4 - 1));
 		results.add(Math.abs(Double.parseDouble(execScore02) / execFinalScore
-				- 1));
+				* 4 - 1));
 		results.add(Math.abs(Double.parseDouble(execScore03) / execFinalScore
-				- 1));
+				* 4 - 1));
 		results.add(Math.abs(Double.parseDouble(execScore04) / execFinalScore
-				- 1));
+				* 4 - 1));
 		// 舞步分误差
-		results.add(Math.abs(Double.parseDouble(impScore01) / impFinalScore - 1));
-		results.add(Math.abs(Double.parseDouble(impScore02) / impFinalScore - 1));
+		results.add(Math.abs(Double.parseDouble(impScore01) / impFinalScore * 2
+				- 1));
+		results.add(Math.abs(Double.parseDouble(impScore02) / impFinalScore * 2
+				- 1));
 		return results;
 	}
 }

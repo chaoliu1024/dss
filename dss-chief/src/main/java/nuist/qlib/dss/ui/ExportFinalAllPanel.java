@@ -79,7 +79,8 @@ public class ExportFinalAllPanel {
 		counts = new ArrayList<Text>();
 
 		shell = new Shell();
-		shell.setImage(new Image(display, "img/logo.png"));
+		shell.setImage(new Image(display, ExportFinalAllPanel.class
+				.getResourceAsStream("/img/logo.png")));
 		shell.setSize(748, 311);
 		shell.setText("项目队伍一键式导出");
 		shell.addShellListener(new ShellAdapter() {

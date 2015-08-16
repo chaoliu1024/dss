@@ -19,14 +19,20 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ViewDeviations {
 
 	protected Shell shell;
 	protected static String matchName;
-	protected static int matchType; // 赛事模式
+	protected static int matchType;
+	// 赛事模式
 	private QueryScore score;
 	private Table table;
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(ViewDeviations.class);
 
 	/**
 	 * Launch the application.
@@ -38,6 +44,7 @@ public class ViewDeviations {
 			ViewDeviations window = new ViewDeviations();
 			window.open();
 		} catch (Exception e) {
+			logger.error(e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -63,7 +70,8 @@ public class ViewDeviations {
 	protected void createContents(Display display) {
 		shell = new Shell(display, SWT.CLOSE | SWT.MIN);
 		shell.setSize(838, 118);
-		shell.setImage(new Image(shell.getDisplay(), "img/logo.png"));
+		shell.setImage(new Image(display, ViewDeviations.class
+				.getResourceAsStream("/img/logo.png")));
 		shell.setText(matchName + "---" + "裁判打分误差");
 		Rectangle displayBounds = shell.getDisplay().getPrimaryMonitor()
 				.getBounds();
@@ -116,11 +124,11 @@ public class ViewDeviations {
 
 		TableColumn tableColumn_8 = new TableColumn(table, SWT.NONE);
 		tableColumn_8.setWidth(80);
-		tableColumn_8.setText("总体评价1");
+		tableColumn_8.setText("舞步1");
 
 		TableColumn tableColumn_9 = new TableColumn(table, SWT.NONE);
 		tableColumn_9.setWidth(80);
-		tableColumn_9.setText("总体评价2");
+		tableColumn_9.setText("舞步2");
 
 		TableItem item;
 		if (score.isCollected()) {
@@ -147,7 +155,7 @@ public class ViewDeviations {
 		} else {
 			MessageBox box = new MessageBox(shell);
 			box.setText("警告");
-			box.setMessage("数据库连接失败!!");
+			box.setMessage("数据库连接失败");
 			box.open();
 		}
 	}

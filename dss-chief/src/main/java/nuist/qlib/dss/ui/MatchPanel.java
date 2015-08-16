@@ -142,12 +142,12 @@ public class MatchPanel extends Composite {
 		ref_edit_shell = shell;
 
 		title_execosite = new Composite(this, SWT.NONE);
-		title_execosite.setBounds(0, 10, 970, 114);
+		title_execosite.setBounds(0, 10, 986, 114);
 
 		title = new Label(title_execosite, SWT.CENTER);
 		title.setFont(SWTResourceManager.getFont("微软雅黑", 20, SWT.NORMAL));
 		title.setBackground(SWTResourceManager.getColor(255, 192, 203));
-		title.setBounds(0, 10, 970, 45);
+		title.setBounds(0, 10, 986, 45);
 		title.setText("参赛队伍");
 
 		match_num_label = new Label(title_execosite, SWT.NONE);
@@ -168,7 +168,7 @@ public class MatchPanel extends Composite {
 		warningLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 
 		score_group = new Group(this, SWT.NONE);
-		score_group.setBounds(0, 130, 970, 270);
+		score_group.setBounds(0, 130, 986, 270);
 
 		art_score_label1 = new Label(score_group, SWT.NONE);
 		art_score_label1.setFont(SWTResourceManager.getFont("微软雅黑", 13,
@@ -214,14 +214,14 @@ public class MatchPanel extends Composite {
 		art_total_score_label.setText("艺术分：");
 		art_total_score_label.setFont(SWTResourceManager.getFont("微软雅黑", 14,
 				SWT.NORMAL));
-		art_total_score_label.setBounds(823, 38, 72, 28);
+		art_total_score_label.setBounds(809, 38, 72, 28);
 
 		art_total_score = new Label(score_group, SWT.NONE);
 		art_total_score.setForeground(SWTResourceManager
 				.getColor(SWT.COLOR_BLUE));
 		art_total_score.setFont(SWTResourceManager
 				.getFont("微软雅黑", 14, SWT.BOLD));
-		art_total_score.setBounds(916, 38, 68, 28);
+		art_total_score.setBounds(887, 38, 68, 28);
 
 		exec_score_label1 = new Label(score_group, SWT.NONE);
 		exec_score_label1.setText("完成分一：");
@@ -267,14 +267,14 @@ public class MatchPanel extends Composite {
 		exec_total_score_label.setText("完成分：");
 		exec_total_score_label.setFont(SWTResourceManager.getFont("微软雅黑", 14,
 				SWT.NORMAL));
-		exec_total_score_label.setBounds(823, 104, 72, 28);
+		exec_total_score_label.setBounds(809, 104, 72, 28);
 
 		exec_total_score = new Label(score_group, SWT.NONE);
 		exec_total_score.setForeground(SWTResourceManager
 				.getColor(SWT.COLOR_BLUE));
 		exec_total_score.setFont(SWTResourceManager.getFont("微软雅黑", 14,
 				SWT.BOLD));
-		exec_total_score.setBounds(916, 104, 68, 28);
+		exec_total_score.setBounds(887, 104, 68, 28);
 
 		imp_score_label1 = new Label(score_group, SWT.NONE);
 		imp_score_label1.setText("舞步分一：");
@@ -334,7 +334,7 @@ public class MatchPanel extends Composite {
 		total_score.setBounds(397, 223, 68, 28);
 
 		button_execosite = new Composite(this, SWT.NONE);
-		button_execosite.setBounds(23, 430, 947, 126);
+		button_execosite.setBounds(23, 430, 963, 126);
 
 		calc_btn = new Button(button_execosite, SWT.NONE);
 		calc_btn.setEnabled(false);
@@ -588,7 +588,8 @@ public class MatchPanel extends Composite {
 				match_num_combo.removeAll();
 				if (matchName != null && matchName.trim().length() != 0) {
 					MatchTeamScore query = new MatchTeamScore();
-					List<String> matchNum = query.getMatchNum(matchName); // 获得未进行比赛的场次
+					// 获得未进行比赛的场次
+					List<String> matchNum = query.getMatchNum(matchName);
 					for (int i = 0; i < matchNum.size(); i++) {
 						match_num_combo.add(matchNum.get(i));
 					}
@@ -664,11 +665,11 @@ public class MatchPanel extends Composite {
 						/********************************** 发送队伍信息 ***********************************/
 						new Thread() {
 							public void run() {
-								MatchInfoMessageVO matchInfoMessageVO =  new MatchInfoMessageVO();
+								MatchInfoMessageVO matchInfoMessageVO = new MatchInfoMessageVO();
 								matchInfoMessageVO.setMatchCategory(category);
 								matchInfoMessageVO.setMatchName(matchName);
 								matchInfoMessageVO.setMatchUnit(team);
-								
+
 								int sum = mainClientOutputThread
 										.sendTeam(matchInfoMessageVO);
 								if (sum == -1) {// 发送失败
@@ -760,8 +761,10 @@ public class MatchPanel extends Composite {
 					MessageBox box = new MessageBox(ref_edit_shell, SWT.OK);
 					box.setText("提示");
 
-					if (query.isCollected()) { // 数据库连接正常
-						if (Float.valueOf(total_score.getText()) > 0) { // 总分大于0
+					// 数据库连接正常
+					if (query.isCollected()) {
+						// 总分大于0
+						if (Float.valueOf(total_score.getText()) > 0) {
 							if (match_num_combo.getText() != null
 									&& !match_num_combo.getText().equals("")
 									&& matchOrder > 0) {
@@ -935,12 +938,14 @@ public class MatchPanel extends Composite {
 							/*********************** 发送队伍信息给裁判长和打分裁判 ******************************/
 							new Thread() {
 								public void run() {
-									MatchInfoMessageVO matchInfoMessageVO =  new MatchInfoMessageVO();
-									matchInfoMessageVO.setMatchCategory(category);
+									MatchInfoMessageVO matchInfoMessageVO = new MatchInfoMessageVO();
+									matchInfoMessageVO
+											.setMatchCategory(category);
 									matchInfoMessageVO.setMatchName(matchName);
 									matchInfoMessageVO.setMatchUnit(team);
-									
-									int sum = mainClientOutputThread.sendTeam(matchInfoMessageVO);
+
+									int sum = mainClientOutputThread
+											.sendTeam(matchInfoMessageVO);
 									if (sum == -1) {
 										sendFailWaing();
 									} else if (sum == 0) {// 无ip
@@ -987,12 +992,13 @@ public class MatchPanel extends Composite {
 							}
 						});
 						if (totalScore == null || totalScore.equals("")) {
-							MatchInfoMessageVO matchInfoMessageVO =  new MatchInfoMessageVO();
+							MatchInfoMessageVO matchInfoMessageVO = new MatchInfoMessageVO();
 							matchInfoMessageVO.setMatchCategory(category);
 							matchInfoMessageVO.setMatchName(matchName);
 							matchInfoMessageVO.setMatchUnit(team);
-							
-							int sum = mainClientOutputThread.sendTeam(matchInfoMessageVO);
+
+							int sum = mainClientOutputThread
+									.sendTeam(matchInfoMessageVO);
 							if (sum == -1) {
 								sendFailWaing();
 							} else if (sum == 0) {// 无ip

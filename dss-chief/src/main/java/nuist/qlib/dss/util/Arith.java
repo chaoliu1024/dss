@@ -13,7 +13,6 @@ public class Arith {
 
 	// 这个类不能实例化
 	private Arith() {
-
 	}
 
 	/**

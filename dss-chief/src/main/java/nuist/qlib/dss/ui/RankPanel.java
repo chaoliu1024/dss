@@ -46,10 +46,14 @@ public class RankPanel {
 	protected Shell rank_shell;
 	private Table table;
 	private Text search;
-	private Button export_result_but; // 导出成绩按钮
-	private Button export_final_but; // 导出决赛按钮
-	private Button search_but; // 查询成绩按钮
-	private Button export_all_but; // 一键式
+	// 导出成绩按钮
+	private Button export_result_but;
+	// 导出决赛按钮
+	private Button export_final_but;
+	// 查询成绩按钮
+	private Button search_but;
+	// 一键式
+	private Button export_all_but;
 	private Composite rank_composite;
 
 	protected int matchType;
@@ -92,7 +96,8 @@ public class RankPanel {
 
 		rank_shell = new Shell(display, SWT.CLOSE | SWT.MIN);
 		rank_shell.setSize(1176, 653);
-		rank_shell.setImage(new Image(display, "img/logo.png"));
+		rank_shell.setImage(new Image(display, RankPanel.class
+				.getResourceAsStream("/img/logo.png")));
 		rank_shell.addShellListener(new ShellAdapter() {
 			public void shellClosed(ShellEvent e) {
 				if (lalaScore.isCollected()) {
@@ -153,7 +158,7 @@ public class RankPanel {
 		if (!lalaScore.isCollected()) {
 			MessageBox box = new MessageBox(rank_shell, SWT.OK);
 			box.setMessage("提示");
-			box.setMessage("连接数据库出错！！");
+			box.setMessage("连接数据库出错!");
 			export_result_but.setEnabled(false);
 			box.open();
 			createTable(rank_composite, data);
@@ -180,7 +185,6 @@ public class RankPanel {
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				// TODO Auto-generated method stub
 				AutoCompleteField field = new AutoCompleteField(search,
 						new TextContentAdapter(), lalaScore.getCategories(
 								matchType, matchName));
@@ -188,8 +192,6 @@ public class RankPanel {
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 		});
@@ -220,12 +222,10 @@ public class RankPanel {
 					ExportFinalAllPanel window = new ExportFinalAllPanel(
 							matchName);
 					window.open();
-
 				} else {
 					box.setMessage("未与数据库连接");
 					box.open();
 				}
-
 			}
 		});
 
@@ -251,7 +251,7 @@ public class RankPanel {
 				MessageBox box = new MessageBox(rank_shell, SWT.OK);
 				box.setText("提示");
 				if (data.size() == 0) {
-					box.setMessage("此时没有数据！！不能导出");
+					box.setMessage("暂无数据！不能导出");
 					box.open();
 					return;
 				}
@@ -310,15 +310,15 @@ public class RankPanel {
 		score02_art.setText("艺术2");
 		score03_art.setText("艺术3");
 		score04_art.setText("艺术4");
-		avg_art.setText("平均艺术分");
+		avg_art.setText("总艺术分");
 		score01_exection.setText("完成1");
 		score02_exection.setText("完成2");
 		score03_exection.setText("完成3");
 		score04_exection.setText("完成4");
-		avg_exection.setText("平均完成分");
-		score01_impression.setText("总体评价1");
-		score02_impression.setText("总体评价2");
-		avg_impression.setText("总体评价分");
+		avg_exection.setText("总艺术分");
+		score01_impression.setText("舞步1");
+		score02_impression.setText("舞步2");
+		avg_impression.setText("总舞步分");
 		sub_score.setText("裁判长减分");
 		total.setText("总分");
 		rank.setText("排名");
