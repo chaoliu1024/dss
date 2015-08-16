@@ -7,8 +7,6 @@ package nuist.qlib.dss.util;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import nuist.qlib.dss.ui.MatchPanel;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -32,7 +30,7 @@ public class Validator {
 		box.setText("提示");
 		Pattern p = Pattern
 				.compile("([0,1,2,3,4,5,6,7,8,9])(\\.\\d{0,2})?|10|10.0|10.00");
-		Pattern dedu_p = Pattern.compile("([0])(\\.[0,1,2,3,4,5]\\d{0,1})?");
+		Pattern dedu_p = Pattern.compile("(\\d{0,2})(\\.\\d{0,2})?");
 
 		boolean b = true;
 
@@ -158,7 +156,7 @@ public class Validator {
 
 		if (scores.get("dedu") != null && !scores.get("dedu").equals("")) {
 			if (!dedu_p.matcher(scores.get("dedu")).matches()) {
-				box.setMessage("'裁判长减分'输入不合法,分值范围0~0.5");
+				box.setMessage("'裁判长减分'输入不合法,保留两位小数");
 				box.open();
 				b = false;
 			}

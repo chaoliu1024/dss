@@ -61,7 +61,8 @@ public class Splash {
 		shell = new Shell();
 		shell.setSize(341, 112);
 		shell.setText("技巧竞赛评分系统");
-		shell.setImage(new Image(display, Splash.class.getResourceAsStream("/img/logo.png")));
+		shell.setImage(new Image(display, Splash.class
+				.getResourceAsStream("/img/logo.png")));
 		shell.addShellListener(new ShellAdapter() {
 			public void shellClosed(ShellEvent e) {
 				MessageBox messagebox = new MessageBox(shell, SWT.ICON_QUESTION
