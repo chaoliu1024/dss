@@ -123,11 +123,13 @@
 	</filter-mapping>
 	<listener>
 		<listener-class>
-			org.directwebremoting.servlet.EfficientShutdownServletContextAttributeListener</listener-class>
+			org.directwebremoting.servlet.EfficientShutdownServletContextAttributeListener
+		</listener-class>
 	</listener>
 	<listener>
 		<listener-class>
-			org.directwebremoting.servlet.EfficientShutdownServletContextListener</listener-class>
+			org.directwebremoting.servlet.EfficientShutdownServletContextListener
+		</listener-class>
 	</listener>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
