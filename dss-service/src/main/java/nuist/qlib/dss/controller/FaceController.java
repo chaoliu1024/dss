@@ -49,7 +49,6 @@ public class FaceController {
 			request.setCharacterEncoding("utf-8");
 			response.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String roleDes = request.getParameter("roleDes");
@@ -62,7 +61,6 @@ public class FaceController {
 		try {
 			response.getWriter().write(JSONArray.fromObject(data).toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -105,7 +103,6 @@ public class FaceController {
 			System.out.println("登陆结果：" + result);
 			response.getWriter().write(result);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -126,7 +123,6 @@ public class FaceController {
 			request.setCharacterEncoding("utf-8");
 			response.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String result;
@@ -141,7 +137,6 @@ public class FaceController {
 			System.out.println("退出登陆：" + result + ":" + role);
 			response.getWriter().write(result);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -283,5 +278,4 @@ public class FaceController {
 	// }
 	// return null;
 	// }
-
 }
