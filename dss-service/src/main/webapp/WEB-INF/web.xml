@@ -80,39 +80,6 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>dwr-invoker</servlet-name>
-		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
-		<init-param>
-			<param-name>debug</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>initApplicationScopeCreatorsAtStartup</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>preferDataUrlSchema</param-name>
-			<param-value>false</param-value>
-		</init-param>
-		<init-param>
-			<param-name>allowGetForSafariButMakeForgeryEasier</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>crossDomainSessionSecurity</param-name>
-			<param-value>false</param-value>
-		</init-param>
-		<init-param>
-			<param-name>allowScriptTagRemoting</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>dwr-invoker</servlet-name>
-		<url-pattern>/dwr/*</url-pattern>
-	</servlet-mapping>
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
